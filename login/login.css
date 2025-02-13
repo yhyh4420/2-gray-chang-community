@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+    margin: 0;
+}
+
+.main-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    padding: 20px 0;
+    border-bottom: 1px solid #ccc;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+}
+
+.login-wrapper {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10%;
+    width: 400px;
+    text-align: center;
+    align-items: center;
+}
+
+.form-wrapper .title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: auto;
+}
+
+.form-wrapper .form {
+    text-align: left;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.form-wrapper .sub-title {
+    font-size: 14px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-wrapper input[type='text'] {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+}
+
+.form-wrapper .helper-text {
+    font-size: 14px;
+    color: red;
+    margin-left: 5px;
+    margin-top: 5px;
+    font-weight: 100;
+}
+
+.login-wrapper .login-signup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.login-signup .login-button {
+    background-color: #ACA0EB;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 7px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+}
+
+.login-signup .signup-link {
+    font-size: 14px;
+    text-decoration: none;
+    color: black;
+}
+
+.login-signup .signup-link:hover {
+    text-decoration: underline;
+}

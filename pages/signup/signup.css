@@ -53,6 +53,8 @@ body {
     margin: 30px auto 10px;
     cursor: pointer;
     font-size: 24px;
+    color: #fff;
+    overflow: hidden;
 }
 
 .form-wrapper .form {

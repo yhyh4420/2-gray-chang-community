@@ -8,6 +8,33 @@ document.addEventListener("DOMContentLoaded", function(){
     const passwordAgainHelperText = document.getElementById("helper-text-password-again")
     const nicknameHelperText = document.getElementById("helper-text-nickname")
     const signupButton = document.querySelector(".signup-button")
+    const profileUpload = document.getElementById("profileUpload");
+    const fileInput = document.getElementById("fileInput");
+
+    profileUpload.addEventListener("click", function () {
+        fileInput.click(); // 파일 선택 창 열기
+    });
+
+    fileInput.addEventListener("change", function () {
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                profileUpload.style.backgroundImage = `url(${e.target.result})`;
+                profileUpload.style.backgroundSize = "cover";
+                profileUpload.style.backgroundPosition = "center";
+                profileUpload.textContent = ""; 
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            profileUpload.style.backgroundImage = "";
+            profileUpload.style.backgroundColor = "#d3d3d3";
+            profileUpload.textContent = "+";
+        }
+    });
+
 
     function validateEmail(email){
         const emailPattern = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]+$/;

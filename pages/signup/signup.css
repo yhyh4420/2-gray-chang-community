@@ -67,7 +67,7 @@ body {
     margin-bottom: 5px;
 }
 
-.form-wrapper input[type='text'] {
+.form-wrapper .input-text {
     width: 100%;
     padding: 5px;
     margin-top: 5px;

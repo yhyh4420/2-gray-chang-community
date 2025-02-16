@@ -38,7 +38,7 @@
   }
   
   .header-icon img {
-    width: 24px; /* 아이콘 크기 조절 */
+    width: 24px;
     height: 24px;
   }
   
@@ -82,17 +82,15 @@
   }
   
   .btn-post:hover {
-    background-color: #4b6ce2;
+    background-color: #7f6aee;
   }
   
-  /* 게시물 목록 */
   .post-list {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
   
-  /* 개별 게시물 */
   .post-item {
     background-color: #ffffff;
     border: 1px solid #ddd;

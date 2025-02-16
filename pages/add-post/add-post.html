@@ -15,19 +15,22 @@
         <div class='add-post-title'>게시글 작성</div>
         <div class='input-group'>
             <div class="form">
-                <label class='sub-title'>제목*<label>
+                <label class='sub-title'>제목*</label>
                     <hr class="divider">
                 <input type='text' class='input-text' id='title-field' placeholder='제목을 입력하해주세요. (최대 26글자)'>
                 <hr class="post-divider">
             </div>
             <div class="form">
-                <label class='sub-title'>내용*<label>
+                <label class='sub-title'>내용*</label>
                     <hr class="divider">
-                <input type='text' class='input-text' id='content-field' placeholder='내용을 입력해주세요.'>
+                <textarea class='input-text' id='content-field' placeholder='내용을 입력해주세요.'></textarea>
                 <hr class="divider">
-                <div class="helper-text" id="helper-text-nickname"></div>
+                <div class="helper-text" id="helper-text-content"></div>
             </div>
-            
+            <div class="form">
+                <label class='sub-title'>이미지</label>
+                <button class="image-button">파일 선택</button>
+            </div>
             <div class="posting">
                 <button class="finish-posting">완료</button>
             </div>

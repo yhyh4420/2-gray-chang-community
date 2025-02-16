@@ -66,6 +66,7 @@ body {
     height: 150px;
     background-color: #f8f9fa;
     border: none;
+    resize: none;
 }
 
 .posting {
@@ -73,14 +74,11 @@ body {
 }
 
 .finish-posting {
+    margin-top: 20px;
     width: 70%;
     height: 30px;
     color: #ffffff;
     background-color: #ACA0EB;
     border: none;
     border-radius: 5px;
-}
-
-.finish-posting:hover {
-    cursor: pointer;
 }

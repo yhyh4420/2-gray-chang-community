@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="add-post" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="add-post.css">
+    <title>add post</title>
+</head>
+<body>
+    <header class = 'main-title'>
+        <button type="button" onclick="location.href='/pages/community-main/community-main.html'" class='return-button'><</button>
+        아무 말 대잔치
+    </header>
+    <div class='form-wrapper'>
+        <div class='add-post-title'>게시글 작성</div>
+        <div class='input-group'>
+            <div class="form">
+                <label class='sub-title'>제목*<label>
+                    <hr class="divider">
+                <input type='text' class='input-text' id='title-field' placeholder='제목을 입력하해주세요. (최대 26글자)'>
+                <hr class="post-divider">
+            </div>
+            <div class="form">
+                <label class='sub-title'>내용*<label>
+                    <hr class="divider">
+                <input type='text' class='input-text' id='content-field' placeholder='내용을 입력해주세요.'>
+                <hr class="divider">
+                <div class="helper-text" id="helper-text-nickname"></div>
+            </div>
+            
+            <div class="posting">
+                <button class="finish-posting">완료</button>
+            </div>
+        </div>
+    </div>
+    <script src="add-post.js"></script>
+</body>
+</html>

@@ -26,11 +26,9 @@ body {
 }
 
 .return-button {
-    left: 100px;
-    position: absolute;
     font-size: 24px;
     cursor: pointer;
-    margin-right: 10px;
+    padding-right: 100px;
     background: none;
     border: none;
 }

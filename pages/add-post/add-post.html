@@ -17,7 +17,7 @@
             <div class="form">
                 <label class='sub-title'>제목*</label>
                     <hr class="divider">
-                <input type='text' class='input-text' id='title-field' placeholder='제목을 입력하해주세요. (최대 26글자)'>
+                <input type='text' class='input-text' id='title-field' placeholder='제목을 입력하해주세요. (최대 26글자)' maxlength='26'>
                 <hr class="post-divider">
             </div>
             <div class="form">
@@ -28,8 +28,9 @@
                 <div class="helper-text" id="helper-text-content"></div>
             </div>
             <div class="form">
-                <label class='sub-title'>이미지</label>
-                <button class="image-button">파일 선택</button>
+                <label class='sub-title'>이미지
+                    <input type="file" id="file">
+                </label>
             </div>
             <div class="posting">
                 <button class="finish-posting">완료</button>

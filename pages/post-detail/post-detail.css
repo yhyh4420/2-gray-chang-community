@@ -34,7 +34,7 @@ body {
 }
 
 .post-divider {
-    width: 60%;
+    width: 100%;
     margin: 10px auto;
     border: none;
     height: 1px;
@@ -59,14 +59,25 @@ body {
     text-align: left;
 }
 
-.user-info {
-    display: flex;
+.writer-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
     justify-content: space-between;
+    align-items: center;
+}
+
+.writer-info .button-container{
+    display: flex;
+}
+
+.writer-info .button-container #user-edit{
+    margin-left: auto;
 }
 
 .status-container {
     display: flex;
     justify-content: center;
+    margin-top: 10px;
 }
 
 .status-box {
@@ -174,9 +185,10 @@ body {
     line-height: 1.5;
 }
 
-.edit-comment, .delete-comment {
-    background-color: #ddd;
-    border: none;
+.edit-delete-button {
+    background-color: #efefef;
+    border-color: #999;
+    border-width: 1px;
     margin: 5px;
     padding: 5px 10px;
     border-radius: 5px;
@@ -184,6 +196,75 @@ body {
     font-size: 12px;
 }
 
-.edit-comment:hover, .delete-comment:hover {
+.edit-delete-button:hover {
     background-color: #bbb;
+}
+
+.modal-background {
+    display: none;
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index:999;
+}
+
+.modal-wrap {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding : 20px;
+
+    position:absolute;
+    border-radius: 10px;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:300px;
+    height:130px;
+    background:#fff;
+    z-index:1000;
+}
+
+.modal-wrap .modal-question{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.modal-button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 35px;
+}
+
+.modal-button {
+    font-size: 15px;
+    margin:0 8px;
+    border-radius: 10px;
+    border: none;
+    width: 30%;
+    height: 100%;
+}
+
+.modal-button#modal-cancel {
+    color: #fff;
+    background-color: #000;
+}
+
+.modal-button#modal-cancel:hover {
+    cursor: pointer;
+}
+
+.modal-button#modal-delete {
+    color: #000;
+    background-color: #aca0eb;
+}
+
+.modal-button#modal-delete:hover {
+    cursor: pointer;
 }

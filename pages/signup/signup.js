@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function(){
     const fileInput = document.getElementById("fileInput");
 
     profileUpload.addEventListener("click", function () {
-        fileInput.click(); // 파일 선택 창 열기
+        fileInput.click();
     });
 
     fileInput.addEventListener("change", function () {
@@ -65,12 +65,8 @@ document.addEventListener("DOMContentLoaded", function(){
         const isPasswordSame = checkSamePassword(passwordInput.value, passwordAgainInput.value);
         const isNicknameValid = validNicknameContainSpace(nicknameInput.value) && validNicknameLength(nicknameInput.value);
 
-        console.log(isEmailValid)
-        console.log(isPasswordValid)
-        console.log(isPasswordSame)
-        console.log(isNicknameValid)
         if (isEmailValid && isPasswordValid && isPasswordSame && isNicknameValid) {
-            signupButton.style.backgroundColor = "#7F6AEF";
+            signupButton.style.backgroundColor = "#7F6AEE";
             signupButton.style.cursor = "pointer";
             signupButton.disabled = false;
         } else {

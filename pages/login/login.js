@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function(){
     const loginButton = document.querySelector(".login-button")
     const emailHelperText = document.getElementById('helper-text-email')
     const passwordHelperText = document.getElementById('helper-text-password')
-    const signupLink = document.getElementsByClassName("signup-link")
 
 
     function validateEmail(email){
@@ -53,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     loginButton.addEventListener("click", function(){
         if (validateEmail(emailInput.value) && validatePassword(passwordInput.value)) {
-            window.location.href = "/post.html";
+            window.location.href = "/pages/community-main/community-main.html";
         }
     })
 })

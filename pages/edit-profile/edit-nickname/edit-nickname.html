@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="edit nickname" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="edit-nickname.css">
-    <title>edit password</title>
+    <title>edit nickname</title>
 </head>
 <body>
     <header class = 'main-title'>
@@ -22,6 +22,7 @@
             <div class="user-email">startupcode@gmail.com</div>
             <label class="label">닉네임</label>
             <input class="user-nickname"></nicknaame>
+            <div class="helper-text" id="helper-nickname"></div>
         </div>
         <div class="button-container">
             <button class="button" id="edit">수정하기</button>
@@ -30,6 +31,16 @@
             <button class="button" id="finish">수정완료</button>
         </div>
     </div>
+    <div class="modal-background"></div>
+    <div class="modal-wrap">
+        <div class="modal-question">회원탈퇴 하시겠습니까?</div>
+        <div class="modal-explain">작성된 게시글과 댓글은 삭제됩니다.</div>
+        <div class="modal-button-container">
+            <button class="modal-button" id="modal-cancel">취소</button>
+            <button class="modal-button" id="modal-resign">확인</button>
+        </div>
+    </div>
+    <div id="tost-message">수정 완료</div>
     <script src="edit-nickname.js"></script>
 </body>
 </html>

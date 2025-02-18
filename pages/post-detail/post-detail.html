@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="add-post" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="post-detail.css">
-    <title>add post</title>
+    <title>post detail</title>
 </head>
 <body>
     <header class = 'main-title'>
@@ -15,13 +15,12 @@
     <main class="container">
         <div class="post-info">
             <div class="post-title">제목 1</div>
-            <div class="user-info">
+            <div class="writer-info">
                 <span class="user-name">더미 작성자 1</span>
                 <span class="date">2021-01-01 00:00:00</span>
-                <span> </span>
                 <span class="button-container">
-                    <button class="edit-button">수정</button>
-                    <button class="delete-button">삭제</button>
+                    <button class="edit-delete-button" id="user-edit" onclick="location.href='/pages/edit-post/edit-post.html'">수정</button>
+                    <button class="edit-delete-button" id="user-delete">삭제</button>
                 </span>
             </div>
         </div>
@@ -29,7 +28,9 @@
         <div class="post-container">
             <img src="/">
             <div class="post-content">
-                뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~
+                뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~<br>
+                뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~<br>
+                뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~뭘 이야기해야하나~
             </div>
             <div class="status-container">
                 <button class="status-box" id="like-box">123<br>좋아요수</button>
@@ -49,8 +50,8 @@
             <div class="comment-item">
                 <div class="user-info">
                     <div class="user-name">더미 작성자 1</div><div class="comment-date">2021-01-01 00:00:00</div>
-                    <button class="edit-comment">수정</button>
-                    <button class="delete-comment">삭제</button>
+                    <button class="edit-delete-button" id="comment-edit">수정</button>
+                    <button class="edit-delete-button" id="comment-delete">삭제</button>
                 </div>
                 <div class="comment-content">댓글 내용</div>
                 </div>
@@ -72,6 +73,16 @@
                 </div>
             </div>
         </div>
+
+    <div class="modal-background"></div>
+    <div class="modal-wrap">
+        <div class="modal-question">게시글을 삭제하시겠습니까?</div>
+        <div class="modal-explain">삭제한 내용은 복구 할 수 없습니다.</div>
+        <div class="modal-button-container">
+            <button class="modal-button" id="modal-cancel">취소</button>
+            <button class="modal-button" id="modal-delete">확인</button>
+        </div>
+    </div>
     </main>
     <script src="post-detail.js"></script>
 </body>

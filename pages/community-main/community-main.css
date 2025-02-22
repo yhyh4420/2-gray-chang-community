@@ -11,32 +11,80 @@
   }
   
   .main-title {
+    display: flex;
+    justify-content: space-between; /* 좌우 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
     font-size: 24px;
     font-weight: bold;
     width: 100%;
     padding: 20px;
     border-bottom: 1px solid #ccc;
-    top: 0;
-    left: 0;
-    background: white;
-    
+}
+
+.title-text {
+    flex: 1; /* 중앙 정렬을 위한 flex 사용 */
+    text-align: center;
+}
+
+.header-profile {
+    width: 40px;
+    height: 40px;
+    position:absolute;
+    right: 32rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
-  
-  .header-icon {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  .header-icon img {
-    width: 24px;
-    height: 24px;
-  }
-  
+
+.profile-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+/* 드롭다운 메뉴 기본 숨김 */
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 100px;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  display: none;
+}
+
+.dropdown-menu ul {
+  font-size: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu li {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #d0d0d0;
+}
+
+/* 활성화 시 보이게 설정 */
+.dropdown-menu.hidden {
+  display: none;
+}
+
+.dropdown-menu.visible {
+  display: block;
+}
+
+
   .container {
     max-width: 600px;
     margin: 0 auto;

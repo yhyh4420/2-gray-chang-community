@@ -6,21 +6,6 @@ document.addEventListener("DOMContentLoaded", async() => {
     const emailHelperText = document.getElementById('helper-text-email')
     const passwordHelperText = document.getElementById('helper-text-password')
 
-    let users = []
-    async function getUsers() {
-        try{
-            const response = await fetch("/data/users.json")
-            if (!response.ok) {
-                throw new Error("사용자 데이터를 불러오지 못했습니다.")
-            }
-            users = await response.json()
-            return users
-        } catch (error) {
-            console.log(error)
-            return null
-        }
-    }
-
     function validateEmail(email){
         const emailPattern = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
         return emailPattern.test(email)
@@ -65,24 +50,36 @@ document.addEventListener("DOMContentLoaded", async() => {
         updateButtonState();
     })
 
-    await getUsers()
-
-    loginButton.addEventListener("click", function () {
-        if (!validateEmail(emailInput.value) || !validatePassword(passwordInput.value)) {
-            return;
-        }
-
+    loginButton.addEventListener("click", async function () {
         const email = emailInput.value;
         const password = passwordInput.value;
 
-        // JSON 데이터에서 이메일과 비밀번호가 일치하는 사용자 찾기
-        const user = users.find((user) => user.email === email && user.password === password);
+        try {
+            // users.json 가져오기
+            const response = await fetch("/data/users.json");
+            const users = await response.json();
 
-        if (user) {
-            alert(`환영합니다, ${user.username}님!`);
-            window.location.href = "/pages/community-main/community-main.html";
-        } else {
-            alert("이메일 또는 비밀번호가 올바르지 않습니다.");
+            // 이메일과 비밀번호 확인
+            const user = users.find(user => user.email === email && user.password === password);
+
+            if (user) {
+                // 프로필 이미지가 없으면 기본 이미지 사용
+                if (!user.profileImage) {
+                    user.profileImage = "/assets/profiles/default.png";
+                }
+
+                alert(`환영합니다, ${user.username}님!`);
+                
+                // 로그인한 사용자 정보 저장
+                localStorage.setItem("user", JSON.stringify(user));
+
+                window.location.href = "/pages/community-main/community-main.html"; // 로그인 성공 시 메인 페이지로 이동
+            } else {
+                alert("이메일 또는 비밀번호가 올바르지 않습니다.");
+            }
+        } catch (error) {
+            console.error("로그인 오류:", error);
+            alert("로그인 중 오류가 발생했습니다.");
         }
     });
 })

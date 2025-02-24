@@ -15,11 +15,11 @@ document.addEventListener("DOMContentLoaded", function(){
         fileInput.click();
     });
 
+    let profileImagePath = "/assets/profiles/default.png"; // 기본 프로필 이미지
     fileInput.addEventListener("change", function () {
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
             const reader = new FileReader();
-
             reader.onload = function (e) {
                 profileUpload.style.backgroundImage = `url(${e.target.result})`;
                 profileUpload.style.backgroundSize = "cover";

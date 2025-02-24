@@ -50,9 +50,16 @@ document.addEventListener("DOMContentLoaded", async() => {
         updateButtonState();
     })
 
+    // 기존 로그인된 사용자 확인 (로그인 유지 기능)
+    const loggedInUser = JSON.parse(localStorage.getItem("user"));
+    if (loggedInUser) {
+        alert(`이미 로그인되어 있습니다: ${loggedInUser.username}`);
+        window.location.href = "/pages/community-main/community-main.html"; // 로그인 상태 유지
+    }
+
     loginButton.addEventListener("click", async function () {
-        const email = emailInput.value;
-        const password = passwordInput.value;
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
 
         try {
             // users.json 가져오기
@@ -63,17 +70,12 @@ document.addEventListener("DOMContentLoaded", async() => {
             const user = users.find(user => user.email === email && user.password === password);
 
             if (user) {
-                // 프로필 이미지가 없으면 기본 이미지 사용
-                if (!user.profileImage) {
-                    user.profileImage = "/assets/profiles/default.png";
-                }
-
                 alert(`환영합니다, ${user.username}님!`);
-                
-                // 로그인한 사용자 정보 저장
+
+                // ✅ 로그인 정보 저장 (로그인 상태 유지)
                 localStorage.setItem("user", JSON.stringify(user));
 
-                window.location.href = "/pages/community-main/community-main.html"; // 로그인 성공 시 메인 페이지로 이동
+                window.location.href = "/pages/community-main/community-main.html"; // 로그인 성공 시 이동
             } else {
                 alert("이메일 또는 비밀번호가 올바르지 않습니다.");
             }

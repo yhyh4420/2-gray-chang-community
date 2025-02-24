@@ -2,7 +2,7 @@
     "email" : "admin@gmail.com",
     "password" : "1q2w3e4r!Q",
     "username" : "admin",
-    "profileImage":"/assets/profiles/default.png"
+    "profileImage": null
 }, {
     "email" : "gray@gmail.com",
     "password" : "1q2w3e4r!Q",

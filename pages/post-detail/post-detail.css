@@ -197,6 +197,19 @@ body {
     gap: 5px;
 }
 
+.post-image-container {
+    width: 100%;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.post-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
 .edit-delete-button {
     background-color: #efefef;
     border: 1px solid #999;

@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const authorElement = document.querySelector(".user-name");
     const dateElement = document.querySelector(".date");
     const postContentElement = document.querySelector(".post-content");
+    const postImageContainer = document.querySelector(".post-image-container"); // 이미지 컨테이너 추가
+    const postImageElement = document.createElement("img"); // 이미지 태그 생성
     const likesElement = document.querySelector("#like-box");
     const viewsElement = document.querySelector(".status-box:nth-child(2)");
     const commentsElement = document.querySelector(".status-box:nth-child(3)");
@@ -26,10 +28,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     const modalDelete = document.getElementById("modal-delete");
 
     try {
-        // 게시글 가져오기
+        // 🔥 게시글 가져오기 (posts.json + localStorage)
         const postResponse = await fetch("/data/posts.json");
         const posts = await postResponse.json();
-        const post = posts.find(p => p.id == postId);
+        const storedPosts = JSON.parse(localStorage.getItem("posts")) || []; // 로컬스토리지 게시글 가져오기
+
+        const allPosts = [...storedPosts, ...posts]; // 모든 게시글 합치기
+        const post = allPosts.find(p => p.id == postId);
 
         if (!post) {
             alert("게시글을 찾을 수 없습니다.");
@@ -37,14 +42,13 @@ document.addEventListener("DOMContentLoaded", async function () {
             return;
         }
 
-        // 사용자 정보 가져오기
+        // 🔥 사용자 정보 가져오기
         const userResponse = await fetch("/data/users.json");
         const users = await userResponse.json();
-        const author = users.find(user => user.username === post.username);
         const loggedInUserEmail = localStorage.getItem("loggedInUser");
         const loggedInUser = users.find(user => user.email === loggedInUserEmail);
 
-        // 게시글 데이터 적용
+        // 🔥 게시글 데이터 적용
         postTitleElement.textContent = post.title;
         authorElement.textContent = post.username;
         dateElement.textContent = post.createdAt;
@@ -52,7 +56,17 @@ document.addEventListener("DOMContentLoaded", async function () {
         likesElement.innerHTML = `${post.likes}<br>좋아요수`;
         viewsElement.innerHTML = `${post.views}<br>조회수`;
 
-        // 수정/삭제 버튼 보이기 (로그인한 사용자와 작성자가 같을 때만)
+        console.log(post.image)
+
+        if (post.image) {
+            postImageElement.src = post.image;
+            postImageElement.alt = "게시글 이미지";
+            postImageContainer.appendChild(postImageElement);
+        } else {
+            postImageContainer.style.display = "none"; // 이미지가 없으면 숨기기
+        }
+
+        // 🔥 수정/삭제 버튼 보이기 (로그인한 사용자와 작성자가 같을 때만)
         if (loggedInUser && loggedInUser.username === post.username) {
             editButton.style.display = "inline-block";
             deleteButton.style.display = "inline-block";
@@ -61,13 +75,17 @@ document.addEventListener("DOMContentLoaded", async function () {
             deleteButton.style.display = "none";
         }
 
-        // 게시글 삭제 기능
+        // 🔥 게시글 삭제 기능 (로컬스토리지에서도 삭제)
         deleteButton.addEventListener("click", function () {
             modalBackGround.style.display = "flex";
             modalWrap.style.display = "flex";
         });
 
         modalDelete.addEventListener("click", function () {
+            let storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+            storedPosts = storedPosts.filter(p => p.id != postId); // 삭제
+            localStorage.setItem("posts", JSON.stringify(storedPosts));
+
             alert("게시글이 삭제되었습니다.");
             window.location.href = "/pages/community-main/community-main.html";
         });
@@ -77,7 +95,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             modalWrap.style.display = "none";
         });
 
-        // 댓글 가져오기
+        // 🔥 댓글 가져오기
         const commentResponse = await fetch("/data/comments.json");
         const comments = await commentResponse.json();
         const filteredComments = comments.filter(comment => comment.postId == postId);
@@ -90,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             addCommentToUI(comment, loggedInUser);
         });
 
-        // 댓글 추가 기능
+        // 🔥 댓글 추가 기능
         addCommentButton.addEventListener("click", function () {
             const commentText = commentInput.value.trim();
 
@@ -117,7 +135,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             commentInput.value = "";
         });
 
-        // 좋아요 기능
+        // 🔥 좋아요 기능 (localStorage 활용)
         likesElement.addEventListener("click", function () {
             if (!loggedInUser) {
                 alert("로그인이 필요합니다.");
@@ -143,13 +161,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 });
 
-// 댓글 수 업데이트 함수
+// 🔥 댓글 수 업데이트 함수
 function updateCommentCount(count) {
     const commentsElement = document.querySelector(".status-box:nth-child(3)");
     commentsElement.innerHTML = `${count}<br>댓글`;
 }
 
-// 댓글 UI 추가 함수
+// 🔥 댓글 UI 추가 함수
 function addCommentToUI(comment, loggedInUser) {
     const commentList = document.querySelector(".comment-lists");
 
@@ -167,7 +185,7 @@ function addCommentToUI(comment, loggedInUser) {
         <div class="comment-content">${comment.content}</div>
     `;
 
-    // 댓글 수정 기능
+    // 🔥 댓글 수정 기능
     const editButton = newComment.querySelector(".comment-edit");
     if (editButton) {
         editButton.addEventListener("click", function () {
@@ -194,17 +212,15 @@ function addCommentToUI(comment, loggedInUser) {
         });
     }
 
-    // 댓글 삭제 기능
+    // 🔥 댓글 삭제 기능
     const deleteButton = newComment.querySelector(".comment-delete");
     if (deleteButton) {
         deleteButton.addEventListener("click", function () {
-            if (confirm("댓글을 삭제하시겠습니까?")) {
-                newComment.remove();
-                updateCommentCount(document.querySelectorAll(".comment-item").length); // 댓글 수 업데이트
-            }
+            newComment.remove();
+            updateCommentCount(document.querySelectorAll(".comment-item").length);
         });
     }
 
     commentList.appendChild(newComment);
-    updateCommentCount(document.querySelectorAll(".comment-item").length); // 댓글 수 업데이트
+    updateCommentCount(document.querySelectorAll(".comment-item").length);
 }

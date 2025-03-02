@@ -1,19 +1,19 @@
-document.addEventListener("DOMContentLoaded", async() => {
-    const emailInput = document.getElementById("email-field")
-    const passwordInput = document.getElementById("password-field")
-    const loginButton = document.querySelector(".login-button")
+document.addEventListener("DOMContentLoaded", async () => {
+    const emailInput = document.getElementById("email-field");
+    const passwordInput = document.getElementById("password-field");
+    const loginButton = document.querySelector(".login-button");
     
-    const emailHelperText = document.getElementById('helper-text-email')
-    const passwordHelperText = document.getElementById('helper-text-password')
+    const emailHelperText = document.getElementById('helper-text-email');
+    const passwordHelperText = document.getElementById('helper-text-password');
 
-    function validateEmail(email){
-        const emailPattern = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
-        return emailPattern.test(email)
+    function validateEmail(email) {
+        const emailPattern = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+        return emailPattern.test(email);
     }
 
-    function validatePassword(password){
-        const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/
-        return passwordPattern.test(password)
+    function validatePassword(password) {
+        const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+        return passwordPattern.test(password);
     }
 
     function updateButtonState() {
@@ -34,26 +34,25 @@ document.addEventListener("DOMContentLoaded", async() => {
             emailHelperText.style.display = "none";
         }
         updateButtonState();
-    })
+    });
 
     passwordInput.addEventListener("input", function () {
         if (passwordInput.value === "") {
             passwordHelperText.textContent = "* 비밀번호를 입력하세요.";
             passwordHelperText.style.display = "block";
-        }
-        else if (!validatePassword(passwordInput.value)) {
+        } else if (!validatePassword(passwordInput.value)) {
             passwordHelperText.textContent = "* 비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.";
             passwordHelperText.style.display = "block";
         } else {
             passwordHelperText.style.display = "none";
         }
         updateButtonState();
-    })
+    });
 
     // 기존 로그인된 사용자 확인 (로그인 유지 기능)
-    const loggedInUser = JSON.parse(localStorage.getItem("user"));
-    if (loggedInUser) {
-        alert(`이미 로그인되어 있습니다: ${loggedInUser.username}`);
+    const loggedInUserEmail = localStorage.getItem("loggedInUser");
+    if (loggedInUserEmail) {
+        alert(`이미 로그인되어 있습니다.`);
         window.location.href = "/pages/community-main/community-main.html"; // 로그인 상태 유지
     }
 
@@ -72,8 +71,8 @@ document.addEventListener("DOMContentLoaded", async() => {
             if (user) {
                 alert(`환영합니다, ${user.username}님!`);
 
-                // ✅ 로그인 정보 저장 (로그인 상태 유지)
-                localStorage.setItem("user", JSON.stringify(user));
+                // ✅ 로그인 성공 시 이메일 저장 (비밀번호는 저장하지 않음)
+                localStorage.setItem("loggedInUser", user.email);
 
                 window.location.href = "/pages/community-main/community-main.html"; // 로그인 성공 시 이동
             } else {
@@ -84,4 +83,4 @@ document.addEventListener("DOMContentLoaded", async() => {
             alert("로그인 중 오류가 발생했습니다.");
         }
     });
-})
+});

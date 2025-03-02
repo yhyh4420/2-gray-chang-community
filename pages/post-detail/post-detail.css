@@ -150,20 +150,22 @@ body {
 .comment-lists {
     width: 100%;
     display: flex;
+    flex-direction: column;
 }
 
 .comment-item {
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding-top: 5px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
 }
 
 .user-info {
-    width: 100%;
     display: flex;
     align-items: center;
-    padding: 10px 0 0;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .user-name {
@@ -172,23 +174,32 @@ body {
     margin-right: 10px;
 }
 
+.comment-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .comment-date {
     font-size: 12px;
     color: #999;
-    margin-right: auto;
 }
 
 .comment-content {
-    margin-top: 3px;
+    margin-top: 5px;
     font-size: 15px;
     color: #333;
     line-height: 1.5;
 }
 
+.comment-actions {
+    display: flex;
+    gap: 5px;
+}
+
 .edit-delete-button {
     background-color: #efefef;
-    border-color: #999;
-    border-width: 1px;
+    border: 1px solid #999;
     margin: 5px;
     padding: 5px 10px;
     border-radius: 5px;
@@ -197,8 +208,9 @@ body {
 }
 
 .edit-delete-button:hover {
-    background-color: #bbb;
+    background-color: #ddd;
 }
+
 
 .modal-background {
     display: none;

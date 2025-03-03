@@ -27,6 +27,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     const modalCancel = document.getElementById("modal-cancel");
     const modalDelete = document.getElementById("modal-delete");
 
+    editButton.addEventListener("click", function () {
+        console.log("✅ 수정 버튼 클릭 - 이동할 URL:", `/pages/edit-post/edit-post.html?id=${postId}`);
+        window.location.href = `/pages/edit-post/edit-post.html?id=${postId}`; // 🔥 postId 포함!
+    });
+
     try {
         // 🔥 게시글 가져오기 (posts.json + localStorage)
         const postResponse = await fetch("/data/posts.json");

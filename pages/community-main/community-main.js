@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const userResponse = await fetch("/data/users.json");
         const users = await userResponse.json();
 
-        // 로그인된 사용자 가져오기 (예제에서는 localStorage로 저장된 이메일 기반)
+        // 로그인된 사용자 가져오기(localStorage 저장된 이메일 기반)
         const loggedInUserEmail = localStorage.getItem("loggedInUser");
         const loggedInUser = users.find(user => user.email === loggedInUserEmail);
 
@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const response = await fetch("/data/posts.json");
         let posts = await response.json();
 
+        // storedPosts : 기존 더미데이터 말고 실제 추가한 데이터
         const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
 
         posts = [...storedPosts, ...posts];
@@ -40,6 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             // 게시글 작성자의 프로필 이미지 찾기
             const postAuthor = users.find(user => user.username === post.username);
             const authorProfileImage = postAuthor?.profileImage || "/assets/profiles/default-avatar.png";
+            const authorName = postAuthor?.username || "탈퇴한 사용자";
 
             const postItem = document.createElement("article");
             postItem.classList.add("post-item");
@@ -56,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <hr class="post-divider">
                 <div class="post-user-info">
                     <img class="author-avatar" src="${authorProfileImage}" alt="프로필 이미지">
-                    <span class="author-name">${post.username}</span>
+                    <span class="author-name">${authorName}</span>
                 </div>
             `;
             postListElement.appendChild(postItem);

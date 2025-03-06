@@ -50,37 +50,46 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     // 기존 로그인된 사용자 확인 (로그인 유지 기능)
-    const loggedInUserEmail = localStorage.getItem("loggedInUser");
-    if (loggedInUserEmail) {
-        alert(`이미 로그인되어 있습니다.`);
-        window.location.href = "/pages/community-main/community-main.html"; // 로그인 상태 유지
+    function checkLoginStatus() {
+        const loggedInUser = localStorage.getItem("loggedInUser");
+        if (loggedInUser) {
+            alert("이미 로그인되어 있습니다.");
+            window.location.href = "/pages/community-main/community-main.html"; // 메인 페이지로 이동
+        }
     }
+
+    checkLoginStatus()
 
     loginButton.addEventListener("click", async function () {
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
         try {
-            // users.json 가져오기
-            const response = await fetch("/data/users.json");
-            const users = await response.json();
+            const response = await fetch("http://localhost:8080/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({email, password})
+            });
+            
 
-            // 이메일과 비밀번호 확인
-            const user = users.find(user => user.email === email && user.password === password);
-
-            if (user) {
-                alert(`환영합니다, ${user.username}님!`);
-
-                // ✅ 로그인 성공 시 이메일 저장 (비밀번호는 저장하지 않음)
-                localStorage.setItem("loggedInUser", user.email);
-
-                window.location.href = "/pages/community-main/community-main.html"; // 로그인 성공 시 이동
-            } else {
-                alert("이메일 또는 비밀번호가 올바르지 않습니다.");
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
+
+            const data = await response.json();
+            console.log("로그인 성공:", data);
+
+            // 로그인 성공 시 이메일 저장 (비밀번호는 저장하지 않음)
+            localStorage.setItem("loggedInUser", email);
+
+            alert(`환영합니다, ${email}님!`);
+            window.location.href = "/pages/community-main/community-main.html"; // 로그인 성공 후 이동
+
         } catch (error) {
             console.error("로그인 오류:", error);
-            alert("로그인 중 오류가 발생했습니다.");
+            alert("로그인 실패! 이메일 또는 비밀번호를 확인하세요.");
         }
     });
 });

@@ -84,10 +84,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     // 6. 로그아웃 기능
-    logoutBtn.addEventListener("click", () => {
-        localStorage.removeItem("loggedInUser");
-        alert("로그아웃 되었습니다.");
-        window.location.href = "/pages/login/login.html";
+    logoutBtn.addEventListener("click", async() => {
+        try{
+            const response = await fetch("http://localhost:8080/auth/logout", {
+                method:'POST',
+                credentials:"include"
+            })
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            localStorage.removeItem("loggedInUser");
+            alert("로그아웃 되었습니다.");
+            window.location.href = "/pages/login/login.html";
+        } catch(error){
+            console.error("로그아웃 오류", error)
+            alert("로그아웃 중 오류가 발생했습니다")
+        }   
     });
 
     // 7. 바깥 영역 클릭하면 드롭다운 닫기

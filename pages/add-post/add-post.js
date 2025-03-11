@@ -2,9 +2,14 @@ document.addEventListener("DOMContentLoaded", async function(){
     const titleField = document.getElementById("title-field");
     const contentField = document.getElementById("content-field");
     const finishButton = document.querySelector(".finish-posting");
+    const fileInput = document.getElementById("file");
+    
+    function validTitle(title) {
+        return (title.value.length <= 26) && (title.value.trim() !== "");
+    }
 
     function isValidInput(title, content) {
-        return title.value.trim() !== "" && content.value.trim() !== "";
+        return validTitle(title) && (content.value.trim() !== "");
     }
 
     function updateButtonState(){
@@ -28,44 +33,43 @@ document.addEventListener("DOMContentLoaded", async function(){
             return;
         }
 
-        // 🔥 로그인한 사용자 정보 가져오기
-        const loggedInUserEmail = localStorage.getItem("loggedInUser");
-        if (!loggedInUserEmail) {
+        const loggedInUser = localStorage.getItem("userId");
+        if (!loggedInUser) {
             alert("로그인이 필요합니다.");
             return;
         }
 
-        // 🔥 users.json에서 username 찾기
-        let username = loggedInUserEmail; // 기본값은 email
-        try {
-            const userResponse = await fetch("/data/users.json");
-            const users = await userResponse.json();
-            const loggedInUser = users.find(user => user.email === loggedInUserEmail);
-            if (loggedInUser) {
-                username = loggedInUser.username; // 🔥 username으로 변환
-            }
-        } catch (error) {
-            console.error("❌ users.json을 불러오는데 실패했습니다:", error);
+        const formData = new FormData();
+        formData.append("title", titleField.value.trim());
+        formData.append("content", contentField.value.trim());
+
+        const file = fileInput.files[0];
+        if (file) {
+            formData.append("image", file);
         }
 
-        // 🔥 username이 적용된 게시글 생성
-        const newPost = {
-            id: Date.now(), // 고유 ID 생성
-            title: titleField.value.trim(),
-            content: contentField.value.trim(),
-            likes: 0,
-            comments: 0,
-            views: 0,
-            createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
-            username: username // 🔥 변환된 username 적용
-        };
+        for (let pair of formData.entries()) {
+            console.log(`${pair[0]}: ${pair[1]}`);
+        }
 
-        // 기존 게시글 불러오기 (localStorage 활용)
-        const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
-        storedPosts.unshift(newPost); // 최신 게시글을 위로 추가
-        localStorage.setItem("posts", JSON.stringify(storedPosts));
+        try {
+            fetchSessionUser()
+            const response = await fetch(`${BASE_URL}/posts`, {
+                method: "POST",
+                credentials: "include",
+                body: formData,
+            });
 
-        // 메인 페이지로 이동
-        window.location.href = '/pages/community-main/community-main.html';
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            alert("게시글이 성공적으로 작성되었습니다!");
+            window.location.href = "/pages/community-main/community-main.html"; 
+
+        } catch (error) {
+            console.error("게시글 작성 중 오류 발생:", error);
+            alert("게시글 작성 실패!");
+        }
     });
 });

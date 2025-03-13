@@ -53,3 +53,24 @@ async function fetchPosts() {
         return [];
     }
 }
+
+async function fetchComment(postId){
+    try {
+        const response = await fetch(`${BASE_URL}/posts/${postId}/comment`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include"
+        });
+
+        if (!response.ok) {
+            throw new Error(`댓글 불러오기 실패: ${response.status}`);
+        }
+
+        const comments = await response.json();
+        console.log("불러온 댓글:", comments);
+        return comments;
+    } catch (error) {
+        console.error("게시글을 불러오는 중 오류 발생:", error);
+        return [];
+    }
+}

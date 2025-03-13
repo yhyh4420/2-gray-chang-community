@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         postContentElement.textContent = postData.post.content;
         likesElement.innerHTML = `${postData.post.likes}<br>좋아요수`;
         viewsElement.innerHTML = `${postData.post.views}<br>조회수`;
+        
 
         if (postData.post.image) {
             const postImageElement = document.createElement("img");
@@ -54,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             postImageContainer.style.display = "none";
         }
 
-        const userData = fetchSessionUser()
+        const userData = await fetchSessionUser()
         if (userData.userId === postData.post.userId) {
             editButton.style.display = "inline-block";
             deleteButton.style.display = "inline-block";
@@ -101,6 +102,39 @@ document.addEventListener("DOMContentLoaded", async function () {
         window.location.href = "/pages/community-main/community-main.html";
     }
 
+    function displayComments(comments) {
+        const commentList = document.querySelector(".comment-lists");
+        commentList.innerHTML = "";
+    
+        comments.forEach(comment => {
+            const commentItem = document.createElement("div");
+            commentItem.classList.add("comment-item");
+            commentItem.innerHTML = `
+                <div class="comment-user">
+                    <span class="comment-author">${comment.userNickname}</span>
+                    <span class="comment-date">${comment.commentDate}</span>
+                </div>
+                <div class="comment-content">${comment.comment}</div>
+                <hr class="post-divider">
+            `;
+            commentList.appendChild(commentItem);
+        });
+    }
+
+    async function updateComment(){
+        try{
+            console.log("📌 updateComment() 실행됨!");
+            const comments = await fetchComment(postId);
+            commentsElement.innerHTML = `${comments.length}<br>댓글`;
+            displayComments(comments);
+        } catch(error){
+            console.error("댓글 로딩 중 오류 발생:", error);
+            alert("댓글을 불러오는 중 오류가 발생했습니다.");
+        }
+    }
+
+    updateComment()
+    
     likesElement.addEventListener("click", async function () {
         try {
             // ✅ UI 먼저 업데이트 (임시 증가)
@@ -133,4 +167,32 @@ document.addEventListener("DOMContentLoaded", async function () {
             likesElement.innerHTML = `${currentLikes}<br>좋아요수`;
         }
     });
-})
+
+    addCommentButton.addEventListener("click", async function(){
+        try{
+            const content = commentInput.value.trim()
+            if (content == ""){
+                alert("댓글을 입력하세요")
+                return
+            }
+            const commentResponse = await fetch(`${BASE_URL}/posts/${postId}/comment`, {
+                method: "POST",
+                credentials: "include",
+                headers : {"Content-Type": "application/json"},
+                body: JSON.stringify({content})
+                })
+            if (commentResponse.status === 404) {
+                throw new Error("댓글 작성 오류(404)")
+            }
+            if (!commentResponse.ok){
+                throw new Error("댓글 작성 오류")
+            }
+            alert("댓글이 성공적으로 작성되었습니다!");
+            await updateComment()
+            commentInput.value = ""
+        } catch(error){
+            console.error("댓글 작성 오류:", error)
+        }
+    })
+}
+)

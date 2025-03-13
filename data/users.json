@@ -1,0 +1,11 @@
+[{
+    "email" : "admin@gmail.com",
+    "password" : "1q2w3e4r!Q",
+    "username" : "admin",
+    "profileImage": null
+}, {
+    "email" : "gray@gmail.com",
+    "password" : "1q2w3e4r!Q",
+    "username" : "gray",
+    "profileImage":"/assets/profiles/gray.png"
+}]

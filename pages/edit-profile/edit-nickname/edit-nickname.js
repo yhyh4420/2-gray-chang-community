@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(){
+    const userEmail = document.querySelector(".user-email")
     const nickname = document.querySelector(".user-nickname")
     const helperText = document.querySelector(".helper-text")
     const editButton = document.getElementById("edit")
@@ -8,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function(){
     const modalWrap = document.querySelector(".modal-wrap")
     const modalCancel = document.getElementById("modal-cancel")
     const modalResign = document.getElementById("modal-resign")
+
+    const loggedEmail = localStorage.getItem("loggedInUser")
+    userEmail.textContent = loggedEmail
 
     editButton.addEventListener("click", function(){
         if (nickname.value.trim() === ""){

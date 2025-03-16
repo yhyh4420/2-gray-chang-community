@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             postImageElement.alt = "게시글 이미지";
             postImageContainer.appendChild(postImageElement);
         } else {
-            postImageContainer.style.display = "none";
+            postImageContainer.innerHTML = "";
         }
 
         const userData = await fetchSessionUser()

@@ -28,10 +28,14 @@
                 <div class="helper-text" id="helper-text-content"></div>
             </div>
             <div class="form">
-                <label class='sub-title'>이미지
-                    <input type="file" id="file">
-                </label>
+                <label class='sub-title'>이미지</label>
+                <div id="image-preview-container" style="display: none;">
+                    <img id="image-preview" src="" alt="기존 이미지" style="max-width: 100%; height: auto; display: block;">
+                    <button type="button" id="remove-image" style="display: block;">이미지 삭제</button>
+                </div>
+                <input type="file" id="file">
             </div>
+            
             <div class="posting">
                 <button class="finish-posting">수정하기</button>
             </div>

@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const modalCancel = document.getElementById("modal-cancel");
     const modalDelete = document.getElementById("modal-delete");
 
+    const userData = await fetchSessionUser()
+
     try{
         const postResponse = await fetch(`${BASE_URL}/posts/${postId}`, {
             method:"GET",
@@ -55,7 +57,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             postImageContainer.innerHTML = "";
         }
 
-        const userData = await fetchSessionUser()
         if (userData.userId === postData.post.userId) {
             editButton.style.display = "inline-block";
             deleteButton.style.display = "inline-block";
@@ -102,32 +103,61 @@ document.addEventListener("DOMContentLoaded", async function () {
         window.location.href = "/pages/community-main/community-main.html";
     }
 
-    function displayComments(comments) {
+    function displayComments(comments, loggedInUserId) {
         const commentList = document.querySelector(".comment-lists");
         commentList.innerHTML = "";
-    
+        
         comments.forEach(comment => {
             const commentItem = document.createElement("div");
             commentItem.classList.add("comment-item");
+            
+            // ✅ 수정, 삭제 버튼 추가 (본인 댓글일 경우만 표시)
+            let editDeleteButtons = "";
+            if (comment.userId === loggedInUserId) {
+                editDeleteButtons = `
+                    <button class="edit-comment" data-comment-id="${comment.commentId}">수정</button>
+                    <button class="delete-comment" data-comment-id="${comment.commentId}">삭제</button>
+                `;
+            }
+    
             commentItem.innerHTML = `
                 <div class="comment-user">
                     <span class="comment-author">${comment.userNickname}</span>
                     <span class="comment-date">${comment.commentDate}</span>
                 </div>
                 <div class="comment-content">${comment.comment}</div>
+                <div class="comment-actions">${editDeleteButtons}</div>
                 <hr class="post-divider">
             `;
+    
             commentList.appendChild(commentItem);
+        });
+    
+        // ✅ 수정, 삭제 버튼 이벤트 추가
+        document.querySelectorAll(".edit-comment").forEach(button => {
+            button.addEventListener("click", function () {
+                const commentId = this.getAttribute("data-comment-id");
+                editComment(commentId);
+            });
+        });
+    
+        document.querySelectorAll(".delete-comment").forEach(button => {
+            button.addEventListener("click", function () {
+                const commentId = this.getAttribute("data-comment-id");
+                deleteComment(commentId);
+            });
         });
     }
 
-    async function updateComment(){
-        try{
-            console.log("📌 updateComment() 실행됨!");
+    async function updateComment() {
+        try {
             const comments = await fetchComment(postId);
             commentsElement.innerHTML = `${comments.length}<br>댓글`;
-            displayComments(comments);
-        } catch(error){
+
+            const loggedInUserId = userData.userId;
+    
+            displayComments(comments, loggedInUserId);
+        } catch (error) {
             console.error("댓글 로딩 중 오류 발생:", error);
             alert("댓글을 불러오는 중 오류가 발생했습니다.");
         }
